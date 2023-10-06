@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mongodb_container:
+    image: mongo:latest
+    container_name: gestion-tareas-database
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      - gestion-tareas-network
+  gestion-tareas-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: gestion-tareas-api
+    restart: always
+    ports:
+      - 8227:8227
+    environment:
+      - ASPNETCORE_URLS=http://+:8227;https://+:8228
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: ["--urls", "http://0.0.0.0:8227", "--swagger-path", "/swagger"]
+    networks:
+      - gestion-tareas-network
+
+networks:
+  gestion-tareas-network:
+    external: true
