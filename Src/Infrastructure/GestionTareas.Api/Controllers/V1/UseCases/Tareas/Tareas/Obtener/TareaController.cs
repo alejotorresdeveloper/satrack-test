@@ -11,13 +11,13 @@ namespace GestionTareas.Api.Controllers.V1.UseCases.Tareas.Tareas.Obtener
     {
 
         private readonly IObtenerTarea _obtenerTarea;
-        private readonly IObtenerTareasPorCategoria _obtenerTareasPorCategoria;
+        private readonly IObtenerTareas _obtenerTareas;
 
         public TareaController(IObtenerTarea obtenerTarea,
-                               IObtenerTareasPorCategoria obtenerTareasPorCategoria)
+                               IObtenerTareas obtenerTareasPorCategoria)
         {
             _obtenerTarea = obtenerTarea;
-            _obtenerTareasPorCategoria = obtenerTareasPorCategoria;
+            _obtenerTareas = obtenerTareasPorCategoria;
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace GestionTareas.Api.Controllers.V1.UseCases.Tareas.Tareas.Obtener
                         Nombre = tarea.Categoria.Nombre
                     },
                     Cumplida = tarea.Cumplida,
-
+                    EstadoTarea = tarea.EstadoTarea.ToString(),
                     Descripcion = tarea.Descripcion,
                     FechaCreacion = tarea.FechaCreacion,
                     FechaFinalizacion = tarea.FechaFinalizacion,
@@ -47,12 +47,12 @@ namespace GestionTareas.Api.Controllers.V1.UseCases.Tareas.Tareas.Obtener
         }
 
         [HttpGet]
-        [Route("{categoriaId}/obtenerTareas")]
+        [Route("obtenerTareas")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CustomResponse<List<ObtenerTareaResponse>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(CustomResponse<object>))]
-        public async Task<IActionResult> ObtenerPorCategoriaTareaAsync(Guid? categoriaId)
+        public async Task<IActionResult> ObtenerTareasAsync()
         {
-            var tareas = await _obtenerTareasPorCategoria.ExecuteAsync(categoriaId);
+            var tareas = await _obtenerTareas.ExecuteAsync();
 
             return Ok(CustomResponse<List<ObtenerTareaResponse>>
                 .BuildSuccess(tareas.Select(tarea => new ObtenerTareaResponse
@@ -64,7 +64,7 @@ namespace GestionTareas.Api.Controllers.V1.UseCases.Tareas.Tareas.Obtener
                         Nombre = tarea.Categoria.Nombre
                     },
                     Cumplida = tarea.Cumplida,
-
+                    EstadoTarea = tarea.EstadoTarea.ToString(),
                     Descripcion = tarea.Descripcion,
                     FechaCreacion = tarea.FechaCreacion,
                     FechaFinalizacion = tarea.FechaFinalizacion,
@@ -78,6 +78,7 @@ namespace GestionTareas.Api.Controllers.V1.UseCases.Tareas.Tareas.Obtener
         //Fill the properties based on Tarea class in Domain project
         public Guid Id { get; set; }
         public string Descripcion { get; set; }
+        public string EstadoTarea { get; set; }
         public DateTime FechaLimite { get; set; }
         public DateTime FechaFinalizacion { get; set; }
         public bool Cumplida { get; set; }

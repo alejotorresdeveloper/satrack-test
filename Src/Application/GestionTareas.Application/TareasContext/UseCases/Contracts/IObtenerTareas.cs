@@ -2,8 +2,8 @@
 
 namespace GestionTareas.Application.TareasContext.UseCases.Contracts
 {
-    public interface IObtenerTareasPorCategoria
+    public interface IObtenerTareas
     {
-        Task<IEnumerable<Tarea>> ExecuteAsync(Guid? categoriaId);
+        Task<IEnumerable<Tarea>> ExecuteAsync();
     }
 }

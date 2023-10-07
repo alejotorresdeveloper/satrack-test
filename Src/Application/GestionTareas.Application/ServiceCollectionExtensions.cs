@@ -18,11 +18,12 @@ namespace GestionTareas.Application
             services.AddScoped<IModificarTarea, ModificarTareaUseCase>();
             services.AddScoped<IEliminarTarea, EliminarTareaUseCase>();
             services.AddScoped<IObtenerTarea, ObtenerTareaUseCase>();
-            services.AddScoped<IObtenerTareasPorCategoria, ObtenerTareasPorCategoriaUseCase>();
+            services.AddScoped<IObtenerTareas, ObtenerTareasUseCase>();
             services.AddScoped<IIniciarTarea, IniciarTareaUseCase>();
             services.AddScoped<IReiniciarTarea, ReiniciarTareaUseCase>();
             services.AddScoped<IFinalizarTarea, FinalizarTareaUseCase>();
             services.AddScoped<ICrearCategorias, CrearCategoriasUseCase>();
+            services.AddScoped<IObtenerCategorias, ObtenerCategoriasUseCase>();
         }
     }
 }

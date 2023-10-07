@@ -1,21 +1,22 @@
 ﻿using GestionTareas.Application.TareasContext.Repositories;
 using GestionTareas.Application.TareasContext.UseCases.Contracts;
+using GestionTareas.Domain.SharedKernel;
 using GestionTareas.Domain.TareasContext;
 
 namespace GestionTareas.Application.TareasContext.UseCases
 {
-    public class ObtenerTareasPorCategoriaUseCase : IObtenerTareasPorCategoria
+    public class ObtenerTareasUseCase : IObtenerTareas
     {
         private readonly ITareaRepository _tareaRepository;
 
-        public ObtenerTareasPorCategoriaUseCase(ITareaRepository tareaRepository)
+        public ObtenerTareasUseCase(ITareaRepository tareaRepository)
         {
             _tareaRepository = tareaRepository;
         }
 
-        public async Task<IEnumerable<Tarea>> ExecuteAsync(Guid? categoriaId)
+        public async Task<IEnumerable<Tarea>> ExecuteAsync()
         {
-            return await _tareaRepository.GetAllAsync(t => categoriaId.Equals(Guid.Empty) || categoriaId == null || t.Categoria.Id.Equals(categoriaId))
+            return await _tareaRepository.GetAllAsync(t => t.Estado.Equals(EstadoEnum.Activo))
                 ?? throw new TareasContextException(TareasContextExceptionEnum.NoSeEncontraronTareas);
         }
     }
