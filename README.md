@@ -14,7 +14,7 @@ Esta APi expone los metodos que permiten a los usuario
 Se debe tener en cuenta este comentario en el appsettings.json
 ![image](https://github.com/alejotorresdeveloper/satrack-test/assets/114192168/34c3b9a2-ab53-4854-8b4e-af65015c4edc)
 
-Se debe correr el siguiente comando:
+Se debe correr el siguiente comando, para eso se debe ubicar al consola en el path donde se encuentra guardado el archivo docker-compose.yml:
 
 ```
 docker-compose up -d
